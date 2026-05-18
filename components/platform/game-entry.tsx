@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Clock3, Gamepad2 } from "lucide-react";
+import { ArrowLeft, Clock3, Gamepad2, Play } from "lucide-react";
 
 import type { GameManifest } from "@/lib/platform/game-types";
 
@@ -9,8 +9,13 @@ type GameEntryProps = {
 };
 
 export function GameEntry({ game, startHref }: GameEntryProps) {
+  const GameIcon = game.icon ?? Gamepad2;
+  const description = Array.isArray(game.description)
+    ? game.description
+    : [game.description ?? game.shortDescription];
+
   return (
-    <main className="game-entry-shell">
+    <main className={`game-theme game-theme--${game.accent ?? "violet"} game-entry-shell`}>
       <Link href="/" className="back-link">
         <ArrowLeft size={16} strokeWidth={2.3} />
         Volver al menu
@@ -18,7 +23,7 @@ export function GameEntry({ game, startHref }: GameEntryProps) {
 
       <section className="game-entry" aria-labelledby="game-entry-title">
         <div className="game-entry__icon" aria-hidden="true">
-          <Gamepad2 size={28} strokeWidth={2.1} />
+          <GameIcon size={28} strokeWidth={2.1} />
         </div>
 
         <div className="game-entry__content">
@@ -30,7 +35,11 @@ export function GameEntry({ game, startHref }: GameEntryProps) {
           ) : null}
 
           <h1 id="game-entry-title">{game.title}</h1>
-          <p>{game.description ?? game.shortDescription}</p>
+          <div className="game-entry__description">
+            {description.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
           {game.featurePills.length > 0 ? (
             <div className="game-feature-row" aria-label="Caracteristicas del juego">
@@ -39,14 +48,15 @@ export function GameEntry({ game, startHref }: GameEntryProps) {
               ))}
             </div>
           ) : null}
-
-          {startHref ? (
-            <Link href={startHref} className="game-entry__button">
-              Empezar
-            </Link>
-          ) : null}
         </div>
       </section>
+
+      {startHref ? (
+        <Link href={startHref} className="game-entry__button">
+          <Play size={18} strokeWidth={2.4} />
+          Empezar
+        </Link>
+      ) : null}
     </main>
   );
 }

@@ -9,13 +9,14 @@ type GameCardProps = {
 
 export function GameCard({ game }: GameCardProps) {
   const isPlayable = game.status === "playable";
-  const cardClassName = `game-card game-card--${game.accent ?? "violet"}`;
+  const GameIcon = game.icon ?? Gamepad2;
+  const cardClassName = `game-theme game-theme--${game.accent ?? "violet"} game-card`;
   const content = (
     <>
       <span className="game-card__shine" aria-hidden="true" />
       <div className="game-card__top">
         <span className="game-card__icon" aria-hidden="true">
-          <Gamepad2 size={22} strokeWidth={2.2} />
+          <GameIcon size={22} strokeWidth={2.2} />
         </span>
         {game.statusLabel ? (
           <span className="game-card__status">{game.statusLabel}</span>

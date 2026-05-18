@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import type { LucideIcon } from "lucide-react";
 
 export type GameStatus = "playable" | "hidden" | "coming-soon";
 
@@ -17,7 +18,7 @@ export type GameManifest = {
   slug: string;
   title: string;
   shortDescription: string;
-  description?: string;
+  description?: string | string[];
   featurePills: string[];
   actionLabel?: string;
   statusLabel?: string;
@@ -26,6 +27,7 @@ export type GameManifest = {
   route: `/games/${string}`;
   entryMode?: GameEntryMode;
   accent?: GameAccent;
+  icon?: LucideIcon;
   database?: GameDatabaseConfig;
   Game?: ComponentType;
 };

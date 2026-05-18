@@ -34,6 +34,39 @@ Los juegos pueden usar `entryMode`.
 - `intro`: muestra una pantalla previa con informacion del manifest.
 - `direct`: entra directo al juego.
 
+La card del menu usa `shortDescription`. La pantalla de entrada usa
+`description`, que puede ser un texto o una lista de parrafos. La descripcion de
+entrada debe explicar como se juega y que opciones importantes tiene el juego,
+sin repetir exactamente el texto corto de la card.
+
+## Identidad visual
+
+Cada juego elige su identidad de plataforma desde el manifest:
+
+```ts
+import { Music } from "lucide-react";
+
+export const miJuegoManifest = {
+  // ...
+  accent: "mint",
+  icon: Music,
+} satisfies GameManifest;
+```
+
+`accent` define los colores de card, entrada, boton de empezar y pildoras.
+`icon` define el loguito visible en card y entrada. Si no se declara icono, se
+usa uno generico.
+
+Acentos disponibles:
+
+- `violet`
+- `rose`
+- `mint`
+- `amber`
+
+Si hace falta otra tonalidad, se agrega un nuevo valor a `GameAccent` y una clase
+`.game-theme--nuevo-color` en `app/globals.css`.
+
 ## Base de datos
 
 Un juego puede no usar base de datos. Si la usa, puede declarar una tabla Neon en

@@ -1,3 +1,5 @@
+import { Puzzle } from "lucide-react";
+
 import type { GameManifest } from "@/lib/platform/game-types";
 
 export const templateManifest = {
@@ -5,7 +7,10 @@ export const templateManifest = {
   slug: "mi-juego",
   title: "Mi Juego",
   shortDescription: "Una descripcion corta para la card del menu.",
-  description: "Una descripcion un poco mas completa para la entrada del juego.",
+  description: [
+    "Una descripcion un poco mas completa para la entrada del juego.",
+    "Aca conviene explicar como se juega, que decisiones tiene el grupo y que variantes importantes existen.",
+  ],
   featurePills: ["Grupo", "Rapido", "Un celular"],
   statusLabel: "En preparacion",
   tags: [],
@@ -13,6 +18,7 @@ export const templateManifest = {
   route: "/games/mi-juego",
   entryMode: "intro",
   accent: "violet",
+  icon: Puzzle,
   database: {
     provider: "neon",
     tableName: "mi_juego",

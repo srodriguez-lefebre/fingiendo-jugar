@@ -59,14 +59,18 @@ Debe responder:
 - Cual es su URL.
 - Que descripcion aparece en el menu.
 - Que pildoras visibles aparecen dentro de la card.
+- Que descripcion larga aparece en la entrada del juego.
 - Que estado tiene.
 - Si usa entrada previa o va directo al juego.
 - Cual es su acento visual.
+- Que icono usa en el menu y en la entrada.
 - Si quiere usar una tabla Neon propia.
 
 Ejemplo:
 
 ```ts
+import { Puzzle } from "lucide-react";
+
 import type { GameManifest } from "@/lib/platform/game-types";
 
 export const miJuegoManifest = {
@@ -74,7 +78,10 @@ export const miJuegoManifest = {
   slug: "mi-juego",
   title: "Mi Juego",
   shortDescription: "Una descripcion corta para la card del menu.",
-  description: "Una descripcion un poco mas completa para la entrada del juego.",
+  description: [
+    "Una descripcion un poco mas completa para la entrada del juego.",
+    "Aca conviene explicar como se juega, que decisiones tiene el grupo y que variantes importantes existen.",
+  ],
   featurePills: ["Grupo", "Rapido", "Un celular"],
   statusLabel: "En preparacion",
   tags: [],
@@ -82,6 +89,7 @@ export const miJuegoManifest = {
   route: "/games/mi-juego",
   entryMode: "intro",
   accent: "violet",
+  icon: Puzzle,
   database: {
     provider: "neon",
     tableName: "mi_juego",
@@ -92,6 +100,41 @@ export const miJuegoManifest = {
 
 `database` es opcional. Si el juego no necesita base de datos, se borra esa
 propiedad.
+
+`description` puede ser un texto o una lista de parrafos. La card usa
+`shortDescription`; la entrada usa `description`. No conviene repetir lo mismo:
+la card debe vender la idea rapido y la entrada debe explicar como se juega,
+que opciones tiene y que espera el grupo antes de tocar "Empezar".
+
+`accent` define la identidad visual de plataforma de ese juego: card, icono,
+pildoras, entrada y boton principal. Los acentos disponibles son:
+
+- `violet`
+- `rose`
+- `mint`
+- `amber`
+
+Si manana hay un juego de musica con tonalidades verdes, por ejemplo, puede usar
+`accent: "mint"` e importar un icono como `Music` desde `lucide-react`.
+La idea es que las cards puedan convivir con colores distintos segun la identidad
+del juego.
+
+Si un juego necesita un color que no existe, primero se agrega el nuevo valor a
+`GameAccent` en `lib/platform/game-types.ts` y despues se crea su clase
+`.game-theme--nuevo-color` en `app/globals.css`.
+
+`icon` tambien es opcional. Si no se declara, la plataforma usa un icono generico
+de juego. Cuando un juego tiene tema claro, conviene elegir uno propio:
+
+```ts
+import { Music } from "lucide-react";
+
+export const musicaManifest = {
+  // ...
+  accent: "mint",
+  icon: Music,
+} satisfies GameManifest;
+```
 
 ### `index.ts`
 
@@ -144,8 +187,9 @@ export const miJuegoManifest = {
 ```
 
 Con `entryMode: "intro"`, `/games/[gameId]` muestra primero `GameEntry` y el
-boton "Empezar" lleva a `/games/[gameId]?play=1`. Con `entryMode: "direct"`, la
-ruta monta el juego directamente.
+boton "Empezar" lleva a `/games/[gameId]?play=1`. Ese boton queda fuera de la
+card grande de descripcion para que la lectura y la accion no compitan. Con
+`entryMode: "direct"`, la ruta monta el juego directamente.
 
 ### `README.md`
 
@@ -276,6 +320,10 @@ Ejemplos:
 Estas pildoras son texto corto de lectura rapida. No deben ser frases largas.
 Los `tags` quedan reservados para usos internos o futuros filtros; por ahora no
 son necesarios.
+
+Las pildoras heredan el `accent` del juego. No hay que elegirles color por
+separado: si el juego es `rose`, las pildoras se ven rojizas/rosadas; si es
+`mint`, se ven verdes.
 
 ## Storage
 
@@ -408,6 +456,7 @@ Debe respetar:
 Puede cambiar:
 
 - Colores.
+- Icono.
 - Layout.
 - Componentes.
 - Ritmo.
