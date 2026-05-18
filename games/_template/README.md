@@ -113,6 +113,7 @@ pildoras, entrada y boton principal. Los acentos disponibles son:
 - `rose`
 - `mint`
 - `amber`
+- `nightclub`
 
 Si manana hay un juego de musica con tonalidades verdes, por ejemplo, puede usar
 `accent: "mint"` e importar un icono como `Music` desde `lucide-react`.
@@ -135,6 +136,20 @@ export const musicaManifest = {
   icon: Music,
 } satisfies GameManifest;
 ```
+
+Tambien se puede usar una imagen publica en vez de un icono Lucide:
+
+```ts
+export const miJuegoManifest = {
+  // ...
+  iconImage: {
+    src: "/games/mi-juego/icon.png",
+    alt: "Icono de Mi Juego",
+  },
+} satisfies GameManifest;
+```
+
+En ese caso, guardar la imagen en `public/games/[gameId]/`.
 
 ### `index.ts`
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Gamepad2 } from "lucide-react";
 
 import type { GameManifest } from "@/lib/platform/game-types";
@@ -16,7 +17,11 @@ export function GameCard({ game }: GameCardProps) {
       <span className="game-card__shine" aria-hidden="true" />
       <div className="game-card__top">
         <span className="game-card__icon" aria-hidden="true">
-          <GameIcon size={22} strokeWidth={2.2} />
+          {game.iconImage ? (
+            <Image src={game.iconImage.src} alt="" width={64} height={64} />
+          ) : (
+            <GameIcon size={22} strokeWidth={2.2} />
+          )}
         </span>
         {game.statusLabel ? (
           <span className="game-card__status">{game.statusLabel}</span>

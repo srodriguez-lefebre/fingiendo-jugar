@@ -5,7 +5,12 @@ export type GameStatus = "playable" | "hidden" | "coming-soon";
 
 export type GameEntryMode = "intro" | "direct";
 
-export type GameAccent = "violet" | "mint" | "amber" | "rose";
+export type GameAccent = "violet" | "mint" | "amber" | "rose" | "nightclub";
+
+export type GameIconImage = {
+  src: string;
+  alt: string;
+};
 
 export type GameDatabaseConfig = {
   provider: "neon";
@@ -28,6 +33,7 @@ export type GameManifest = {
   entryMode?: GameEntryMode;
   accent?: GameAccent;
   icon?: LucideIcon;
+  iconImage?: GameIconImage;
   database?: GameDatabaseConfig;
   Game?: ComponentType;
 };

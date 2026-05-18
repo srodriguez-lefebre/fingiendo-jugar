@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Clock3, Gamepad2, Play } from "lucide-react";
 
 import type { GameManifest } from "@/lib/platform/game-types";
@@ -23,7 +24,11 @@ export function GameEntry({ game, startHref }: GameEntryProps) {
 
       <section className="game-entry" aria-labelledby="game-entry-title">
         <div className="game-entry__icon" aria-hidden="true">
-          <GameIcon size={28} strokeWidth={2.1} />
+          {game.iconImage ? (
+            <Image src={game.iconImage.src} alt="" width={96} height={96} />
+          ) : (
+            <GameIcon size={28} strokeWidth={2.1} />
+          )}
         </div>
 
         <div className="game-entry__content">

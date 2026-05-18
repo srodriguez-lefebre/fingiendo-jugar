@@ -55,7 +55,8 @@ export const miJuegoManifest = {
 
 `accent` define los colores de card, entrada, boton de empezar y pildoras.
 `icon` define el loguito visible en card y entrada. Si no se declara icono, se
-usa uno generico.
+usa uno generico. Si el juego usa una imagen propia, puede declarar `iconImage`
+con una ruta publica.
 
 Acentos disponibles:
 
@@ -63,9 +64,23 @@ Acentos disponibles:
 - `rose`
 - `mint`
 - `amber`
+- `nightclub`
 
 Si hace falta otra tonalidad, se agrega un nuevo valor a `GameAccent` y una clase
 `.game-theme--nuevo-color` en `app/globals.css`.
+
+Ejemplo con imagen:
+
+```ts
+export const miJuegoManifest = {
+  // ...
+  accent: "nightclub",
+  iconImage: {
+    src: "/games/mi-juego/icon.png",
+    alt: "Icono de Mi Juego",
+  },
+} satisfies GameManifest;
+```
 
 ## Base de datos
 

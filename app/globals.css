@@ -209,6 +209,14 @@ textarea {
   --game-surface-rgb: 25 18 12;
 }
 
+.game-theme--nightclub {
+  --game-accent: #ff1f5f;
+  --game-accent-strong: #ff8ab0;
+  --game-accent-rgb: 255 31 95;
+  --game-accent-dark-rgb: 76 6 26;
+  --game-surface-rgb: 21 5 15;
+}
+
 .game-card {
   position: relative;
   overflow: hidden;
@@ -271,6 +279,15 @@ textarea {
   border-radius: 0.45rem;
   color: #f7f3ff;
   background: var(--game-accent);
+}
+
+.game-card__icon img,
+.game-entry__icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
 }
 
 .game-card__action {
