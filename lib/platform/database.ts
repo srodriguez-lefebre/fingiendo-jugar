@@ -1,10 +1,6 @@
 import "server-only";
 
-import {
-  escapeIdentifier,
-  neon,
-  type NeonQueryFunction,
-} from "@neondatabase/serverless";
+import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 
 import type { GameDatabaseConfig, GameManifest } from "@/lib/platform/game-types";
 
@@ -49,7 +45,7 @@ export function getEscapedGameTableName(config: GameDatabaseConfig) {
 
   assertValidTableName(config.tableName);
 
-  return escapeIdentifier(config.tableName);
+  return escapeSqlIdentifier(config.tableName);
 }
 
 export async function readGameTableRows<Row extends Record<string, unknown>>(
@@ -82,7 +78,7 @@ export async function insertGameTableRow<Row extends Record<string, unknown>>(
   const columns = entries
     .map(([columnName]) => {
       assertValidColumnName(columnName);
-      return escapeIdentifier(columnName);
+      return escapeSqlIdentifier(columnName);
     })
     .join(", ");
   const placeholders = entries.map((_, index) => `$${index + 1}`).join(", ");
@@ -111,6 +107,10 @@ function assertValidColumnName(columnName: string) {
       `Invalid game column name "${columnName}". Use lowercase snake_case names.`,
     );
   }
+}
+
+function escapeSqlIdentifier(identifier: string) {
+  return `"${identifier.replaceAll('"', '""')}"`;
 }
 
 function clampLimit(limit: number) {

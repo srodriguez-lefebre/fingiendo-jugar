@@ -23,8 +23,8 @@ export function GameMenu() {
             <Sparkles size={20} strokeWidth={2.2} />
             <span>Menu listo</span>
           </div>
-          <strong>Juegos en preparacion</strong>
-          <p>La base ya esta armada para ir sumando partidas jugables.</p>
+          <strong>Primer juego listo</strong>
+          <p>Impostor ya se puede jugar desde un solo celular.</p>
         </div>
       </section>
 
