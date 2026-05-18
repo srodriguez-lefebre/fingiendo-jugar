@@ -1,6 +1,6 @@
 import { Sparkles, TimerReset } from "lucide-react";
 
-import { playableGames } from "@/games/registry";
+import { visibleMenuGames } from "@/games/registry";
 
 import { GameCard } from "./game-card";
 
@@ -32,32 +32,11 @@ export function GameMenu() {
         <h2 id="games-title" className="sr-only">
           Juegos disponibles
         </h2>
-        {playableGames.length > 0 ? (
-          <div className="games-grid">
-            {playableGames.map((game) => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
-        ) : (
-          <div className="placeholder-grid">
-            <article className="empty-card">
-              <span className="empty-card__mark" aria-hidden="true">
-                <Sparkles size={24} strokeWidth={2.1} />
-              </span>
-              <div>
-                <h3>Primer juego en camino</h3>
-                <p>El menu ya esta preparado para activarlo cuando toque.</p>
-              </div>
-
-              <div className="game-feature-row" aria-label="Caracteristicas del juego">
-                <span>2-12 jugadores</span>
-                <span>20 min</span>
-                <span>Un celular</span>
-                <span>Roles ocultos</span>
-              </div>
-            </article>
-          </div>
-        )}
+        <div className="games-grid">
+          {visibleMenuGames.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
 
         <span className="soft-pill">
           <TimerReset size={15} strokeWidth={2.2} />

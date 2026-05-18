@@ -1,0 +1,1 @@
+export { impostorManifest } from "./manifest";

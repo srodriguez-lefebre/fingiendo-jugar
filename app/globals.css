@@ -117,7 +117,7 @@ textarea {
 .menu-hero__panel div,
 .soft-pill,
 .game-card__action,
-.game-card__meta span {
+.game-card__status {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -174,17 +174,10 @@ textarea {
 .games-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 22rem));
 }
 
-.placeholder-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 22rem);
-}
-
-.game-card,
-.empty-card {
+.game-card {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(182, 140, 255, 0.28);
@@ -221,7 +214,7 @@ textarea {
 
 .game-card__top,
 .game-card__copy,
-.game-card__meta,
+.game-feature-row,
 .game-card__tags {
   position: relative;
   z-index: 1;
@@ -245,9 +238,23 @@ textarea {
 }
 
 .game-card__action {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
   color: var(--violet-strong);
   font-size: 0.9rem;
   font-weight: 800;
+}
+
+.game-card__status {
+  min-height: 1.75rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(182, 140, 255, 0.28);
+  border-radius: 999px;
+  color: rgba(247, 243, 255, 0.74);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .game-card__copy {
@@ -267,16 +274,10 @@ textarea {
   line-height: 1.5;
 }
 
-.game-card__meta,
 .game-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.game-card__meta {
-  color: #ded7ee;
-  font-size: 0.88rem;
 }
 
 .game-card__tags span {
@@ -313,42 +314,6 @@ textarea {
   line-height: 1;
 }
 
-.empty-card {
-  display: grid;
-  gap: 0.9rem;
-  min-height: 11.5rem;
-  align-content: space-between;
-  padding: clamp(1rem, 2vw, 1.25rem);
-  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.2);
-}
-
-.empty-card__mark {
-  display: grid;
-  flex: 0 0 auto;
-  width: 3rem;
-  height: 3rem;
-  place-items: center;
-  border-radius: 0.45rem;
-  color: #f7f3ff;
-  background: var(--violet);
-}
-
-.empty-card h3 {
-  max-width: 12ch;
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.9rem, 5vw, 2.7rem);
-  line-height: 0.95;
-  letter-spacing: 0;
-}
-
-.empty-card p {
-  max-width: 18rem;
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
 @media (min-width: 760px) {
   .site-shell {
     padding: 2rem;
@@ -372,9 +337,5 @@ textarea {
 
   .soft-pill {
     justify-self: start;
-  }
-
-  .placeholder-grid {
-    grid-template-columns: 1fr;
   }
 }
