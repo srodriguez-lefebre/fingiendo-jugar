@@ -9,13 +9,14 @@ Juego de roles ocultos para jugar en grupo con un solo celular.
 3. Todos ven la palabra, excepto los impostores.
 4. En modo normal, el impostor ve que es impostor, la categoria y una pista.
 5. En modo confundido, cada impostor recibe una palabra falsa distinta de la misma categoria.
-6. Cuando todos vieron su pantalla privada, empieza el timer.
-7. El grupo juega fuera de la app: hablan, tiran pistas y sospechan.
-8. Al terminar, se revela la palabra secreta y quienes eran los impostores.
+6. Si se activa ocultar pista, las pantallas privadas no muestran pistas.
+7. Cuando todos vieron su pantalla privada, empieza el timer.
+8. El grupo juega fuera de la app: hablan, tiran pistas y sospechan.
+9. Al terminar, se revela la palabra secreta y quienes eran los impostores.
 
 ## Flujo
 
-- Configuracion: jugadores, categoria, timer, cantidad de impostores y modo confundido.
+- Configuracion: jugadores, categoria, timer, cantidad de impostores, modo confundido y pistas.
 - Revelado: el celular se pasa jugador por jugador; cada uno toca Ver y luego Ocultar.
 - Timer: de 1 a 10 minutos, con boton para revelar antes.
 - Resultado: palabra secreta e impostores.

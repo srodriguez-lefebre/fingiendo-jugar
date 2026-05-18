@@ -31,6 +31,7 @@ type RoundState = {
   assignments: PlayerAssignment[];
   categoryLabel: string;
   secretWord: ImpostorWord;
+  hideHint: boolean;
   timerMinutes: number;
 };
 
@@ -49,6 +50,7 @@ export function ImpostorGame() {
   const [countMode, setCountMode] = useState<ImpostorCountMode>("fixed");
   const [fixedImpostorCount, setFixedImpostorCount] = useState(1);
   const [confusedMode, setConfusedMode] = useState(false);
+  const [hideHint, setHideHint] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(DEFAULT_TIMER_MINUTES);
   const [round, setRound] = useState<RoundState | null>(null);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
@@ -212,6 +214,7 @@ export function ImpostorGame() {
         assignments,
         categoryLabel: selectedCategory.label,
         secretWord,
+        hideHint,
         timerMinutes,
       });
       setCurrentPlayerIndex(0);
@@ -277,13 +280,17 @@ export function ImpostorGame() {
           {currentAssignment.word ? (
             <>
               <h1>{currentAssignment.word}</h1>
-              <p className="impostor-copy">Pista: {currentAssignment.hint}</p>
+              {!round.hideHint ? (
+                <p className="impostor-copy">Pista: {currentAssignment.hint}</p>
+              ) : null}
             </>
           ) : (
             <>
               <p className="impostor-role-alert">Sos impostor</p>
               <h1>{round.categoryLabel}</h1>
-              <p className="impostor-copy">Pista: {currentAssignment.hint}</p>
+              {!round.hideHint ? (
+                <p className="impostor-copy">Pista: {currentAssignment.hint}</p>
+              ) : null}
             </>
           )}
           <button className="impostor-primary-button" type="button" onClick={hideAndContinue}>
@@ -469,6 +476,15 @@ export function ImpostorGame() {
                 onChange={(event) => setConfusedMode(event.target.checked)}
               />
               <span>Impostor confundido</span>
+            </label>
+
+            <label className="impostor-check">
+              <input
+                type="checkbox"
+                checked={hideHint}
+                onChange={(event) => setHideHint(event.target.checked)}
+              />
+              <span>Ocultar pista</span>
             </label>
           </section>
         </div>
