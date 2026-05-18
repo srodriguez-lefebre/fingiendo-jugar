@@ -345,13 +345,18 @@ textarea {
 
 .game-feature-row {
   display: flex;
+  align-self: start;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.35rem;
 }
 
 .game-feature-row span {
+  display: inline-flex;
   min-height: 1.35rem;
-  padding: 0.22rem 0.42rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.42rem;
   border: 1px solid rgb(var(--game-accent-rgb) / 0.32);
   border-radius: 999px;
   color: rgba(247, 243, 255, 0.86);
