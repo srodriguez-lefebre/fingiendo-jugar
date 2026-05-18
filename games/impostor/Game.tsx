@@ -142,11 +142,15 @@ export function ImpostorGame() {
   }
 
   function removePlayer(index: number) {
-    setPlayerNames((current) =>
-      current.length <= MIN_PLAYERS
-        ? current
-        : current.filter((_, playerIndex) => playerIndex !== index),
-    );
+    if (playerNames.length <= MIN_PLAYERS) {
+      return;
+    }
+
+    const nextPlayerNames = playerNames.filter((_, playerIndex) => playerIndex !== index);
+    const nextMaxImpostors = getMaxImpostors(Math.max(nextPlayerNames.length, MIN_PLAYERS));
+
+    setPlayerNames(nextPlayerNames);
+    setFixedImpostorCount((current) => clamp(current, 1, nextMaxImpostors));
   }
 
   async function startRound() {
@@ -474,6 +478,8 @@ export function ImpostorGame() {
             {getSetupMessage({
               canStart,
               categoryStatus,
+              isStarting,
+              playerCount: players.length,
               selectedCategory,
               minPlayers: MIN_PLAYERS,
             })}
@@ -518,7 +524,14 @@ function pickIndexes(size: number, count: number) {
 }
 
 function shuffle<T>(items: T[]) {
-  return [...items].sort(() => Math.random() - 0.5);
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = randomInt(0, index);
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled;
 }
 
 function formatTime(totalSeconds: number) {
@@ -547,11 +560,15 @@ async function loadRoundWords(categoryId: string, count: number) {
 function getSetupMessage({
   canStart,
   categoryStatus,
+  isStarting,
+  playerCount,
   selectedCategory,
   minPlayers,
 }: {
   canStart: boolean;
   categoryStatus: CategoryStatus;
+  isStarting: boolean;
+  playerCount: number;
   selectedCategory: ImpostorCategory | null;
   minPlayers: number;
 }) {
@@ -563,8 +580,16 @@ function getSetupMessage({
     return "No se pudieron cargar las categorias.";
   }
 
-  if (!canStart) {
+  if (isStarting) {
+    return "Cargando palabras.";
+  }
+
+  if (playerCount < minPlayers) {
     return `Minimo ${minPlayers} jugadores.`;
+  }
+
+  if (!canStart) {
+    return "Elegí una categoria para empezar.";
   }
 
   return `${selectedCategory?.wordCount ?? 0} palabras en ${selectedCategory?.label ?? "categoria"}.`;

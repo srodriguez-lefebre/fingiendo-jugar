@@ -21,30 +21,37 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const sql = getDatabase();
-  const tableName = getEscapedGameTableName(impostorDatabaseConfig);
+  try {
+    const sql = getDatabase();
+    const tableName = getEscapedGameTableName(impostorDatabaseConfig);
 
-  const words = await sql.query(
-    `
-      select
-        word,
-        clue as hint
-      from ${tableName}
-      where category_id = $1
-      order by random()
-      limit $2
-    `,
-    [categoryId, count],
-  ) as WordRow[];
+    const words = await sql.query(
+      `
+        select
+          word,
+          clue as hint
+        from ${tableName}
+        where category_id = $1
+        order by random()
+        limit $2
+      `,
+      [categoryId, count],
+    ) as WordRow[];
 
-  if (words.length < count) {
+    if (words.length < count) {
+      return NextResponse.json(
+        { error: "Not enough words for this category." },
+        { status: 404 },
+      );
+    }
+
+    return NextResponse.json({ words });
+  } catch {
     return NextResponse.json(
-      { error: "Not enough words for this category." },
-      { status: 404 },
+      { error: "Could not load impostor words." },
+      { status: 500 },
     );
   }
-
-  return NextResponse.json({ words });
 }
 
 function clampCount(count: number) {
