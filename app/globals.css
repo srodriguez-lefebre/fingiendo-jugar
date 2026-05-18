@@ -314,6 +314,117 @@ textarea {
   line-height: 1;
 }
 
+.game-entry-shell {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 56rem);
+  min-height: 100vh;
+  align-content: center;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.back-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgba(247, 243, 255, 0.76);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: var(--violet-strong);
+  outline: none;
+}
+
+.game-entry {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  overflow: hidden;
+  padding: clamp(1.1rem, 5vw, 2.2rem);
+  border: 1px solid rgba(182, 140, 255, 0.28);
+  border-radius: 0.5rem;
+  background: linear-gradient(150deg, rgba(43, 31, 75, 0.98), rgba(17, 13, 31, 0.98));
+  box-shadow: 0 1.6rem 5rem rgba(0, 0, 0, 0.22);
+}
+
+.game-entry::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 0 54%, rgba(182, 140, 255, 0.16) 54% 55%, transparent 55%),
+    linear-gradient(180deg, rgba(155, 108, 255, 0.16), transparent 40%);
+  content: "";
+  pointer-events: none;
+}
+
+.game-entry__icon,
+.game-entry__content {
+  position: relative;
+  z-index: 1;
+}
+
+.game-entry__icon {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border-radius: 0.5rem;
+  color: #f7f3ff;
+  background: var(--violet);
+}
+
+.game-entry__content {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 38rem;
+}
+
+.game-entry__status {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 1.75rem;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(182, 140, 255, 0.28);
+  border-radius: 999px;
+  color: rgba(247, 243, 255, 0.74);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.game-entry h1 {
+  margin: 0;
+  font-size: clamp(3rem, 12vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.game-entry p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.5;
+}
+
+.game-entry__button {
+  width: fit-content;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(182, 140, 255, 0.38);
+  border-radius: 999px;
+  color: #f7f3ff;
+  background: rgba(155, 108, 255, 0.34);
+  cursor: pointer;
+}
+
 @media (min-width: 760px) {
   .site-shell {
     padding: 2rem;

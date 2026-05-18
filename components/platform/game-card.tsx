@@ -37,9 +37,9 @@ export function GameCard({ game }: GameCardProps) {
 
       {game.tags.length > 0 ? (
         <div className="game-card__tags">
-        {game.tags.map((tag) => (
-          <span key={tag}>{tag}</span>
-        ))}
+          {game.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
         </div>
       ) : null}
 

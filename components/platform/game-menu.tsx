@@ -1,4 +1,4 @@
-import { Sparkles, TimerReset } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 import { visibleMenuGames } from "@/games/registry";
 
@@ -38,10 +38,6 @@ export function GameMenu() {
           ))}
         </div>
 
-        <span className="soft-pill">
-          <TimerReset size={15} strokeWidth={2.2} />
-          Mas juegos pronto
-        </span>
       </section>
     </main>
   );
