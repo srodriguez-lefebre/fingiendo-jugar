@@ -19,7 +19,7 @@ const DEFAULT_RULES: readonly string[] = [
   "Pregunta",
 ];
 
-const SUITS = ["♠", "♥", "♦", "♣"] as const;
+const SUITS = ["oros", "copas", "espadas", "bastos"] as const;
 type Suit = (typeof SUITS)[number];
 
 type Card = { value: number; suit: Suit };
@@ -116,7 +116,7 @@ export function LaPutitaGame() {
   // — Config phase —
   if (phase === "config") {
     return (
-      <div className="putita-shell">
+      <main className="putita-shell">
         <Link href="/" className="back-link">
           <ArrowLeft size={16} strokeWidth={2.5} />
           Inicio
@@ -141,6 +141,7 @@ export function LaPutitaGame() {
                   <div className="putita-rule-edit">
                     <input
                       autoFocus
+                      aria-label={`Editar regla ${editingIndex !== null ? editingIndex + 1 : ""}`}
                       value={editingValue}
                       maxLength={60}
                       onChange={(e) => setEditingValue(e.target.value)}
@@ -196,14 +197,14 @@ export function LaPutitaGame() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   // — Ended phase —
   if (phase === "ended") {
     return (
-      <div className="putita-shell">
+      <main className="putita-shell">
         <button
           className="putita-back-btn"
           type="button"
@@ -228,13 +229,13 @@ export function LaPutitaGame() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   // — Playing phase —
   return (
-    <div className="putita-shell">
+    <main className="putita-shell">
       <div className="putita-top-bar">
         <button
           className="putita-back-btn"
@@ -279,7 +280,6 @@ export function LaPutitaGame() {
             className="putita-draw-btn"
             type="button"
             onClick={drawCard}
-            disabled={cardsDrawn >= TOTAL_CARDS}
           >
             {currentCard === null ? "Empezar" : "Siguiente carta"}
           </button>
@@ -300,6 +300,6 @@ export function LaPutitaGame() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -977,6 +977,11 @@ textarea {
   outline: none;
 }
 
+.putita-rule-edit input:focus-visible {
+  border-color: rgba(255, 31, 95, 0.9);
+  box-shadow: 0 0 0 3px rgba(255, 31, 95, 0.22);
+}
+
 .putita-rule-edit button {
   display: grid;
   width: 2.3rem;
@@ -988,6 +993,12 @@ textarea {
   color: rgba(247, 243, 255, 0.8);
   background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
+}
+
+.putita-rule-edit button:focus-visible {
+  border-color: rgba(255, 31, 95, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 31, 95, 0.22);
+  outline: none;
 }
 
 /* Buttons */
