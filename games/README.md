@@ -21,6 +21,28 @@ importa desde la carpeta del juego:
 import { impostorManifest } from "@/games/impostor";
 ```
 
+## Brief inicial
+
+Antes de crear la carpeta de un juego, responder estas preguntas. No tienen que
+ser largas: sirven para que el juego entre bien en la plataforma desde el primer
+commit.
+
+1. Como se llama el juego y cual va a ser su `gameId`/slug?
+2. Que frase corta explica la card del menu en una sola idea?
+3. Cuales son las 3 pildoras visibles del juego?
+4. El juego arranca como `coming-soon`, `playable` o `hidden`?
+5. Que color o acento representa al juego?
+6. Que icono usa: uno de `lucide-react` o una imagen en `public/games/[gameId]/`?
+7. Que va a mostrar la pre-card de entrada antes de jugar?
+   Debe incluir descripcion y como se juega, salvo que el juego use `entryMode: "direct"`.
+8. Como se juega en terminos simples: que hace el grupo antes, durante y al final?
+9. Se juega en un solo celular o necesita varios dispositivos?
+10. Necesita guardar progreso local o Neon?
+    Si usa Neon, cual es la unica tabla del juego y es `read-only` o `read-write`?
+
+Con esas respuestas se puede completar el `manifest`, decidir la estructura de
+la carpeta y evitar que cada juego invente su integracion desde cero.
+
 ## Estados
 
 - `coming-soon`: aparece en el menu, no es jugable todavia.
@@ -38,6 +60,11 @@ La card del menu usa `shortDescription`. La pantalla de entrada usa
 `description`, que puede ser un texto o una lista de parrafos. La descripcion de
 entrada debe explicar como se juega y que opciones importantes tiene el juego,
 sin repetir exactamente el texto corto de la card.
+
+La pre-card de entrada es parte del contrato de los juegos con `entryMode:
+"intro"`. Antes de llegar al componente jugable, la persona debe poder entender
+que va a pasar, como se juega y que decisiones tiene que tomar el grupo. Si esa
+pantalla no aporta nada, recien ahi se puede considerar `entryMode: "direct"`.
 
 ## Identidad visual
 
