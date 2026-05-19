@@ -14,6 +14,43 @@ La idea es que, en el futuro, crear un juego nuevo sea algo parecido a:
 6. Probar que aparece en el menu.
 7. Cuando el juego exista, implementar `Game.tsx` y cambiar su estado a `playable`.
 
+## Brief inicial antes de crear un juego
+
+Antes de copiar esta carpeta, responder estas preguntas. Son el contrato minimo
+para que el juego nuevo encaje con la plataforma.
+
+1. Como se llama el juego y cual va a ser su `gameId`/slug?
+   Ejemplo: `impostor`, `la_putita`, `mi-juego`.
+2. Que frase corta aparece en la card del menu?
+   Esto va en `shortDescription`.
+3. Cuales son las 3 pildoras visibles?
+   Deben ser cortas, por ejemplo `Ronda`, `Un mazo`, `Para tomar`.
+4. En que estado arranca?
+   Usar `coming-soon` si aparece en el menu pero todavia no se puede jugar,
+   `playable` si ya monta `Game`, o `hidden` si no debe verse.
+5. Que identidad visual tiene?
+   Elegir `accent` y un `icon` de `lucide-react` o `iconImage` desde
+   `public/games/[gameId]/`.
+6. Que va a mostrar la pre-card de entrada antes de jugar?
+   Con `entryMode: "intro"`, `description` debe contar como se juega y que
+   opciones importantes existen, sin repetir exactamente la frase corta de la
+   card.
+7. La pre-card necesita boton "Empezar" o el juego entra directo?
+   Usar `entryMode: "intro"` como default. Usar `direct` solo si la pantalla
+   previa no aporta nada.
+8. Se juega en un solo celular o en varios dispositivos?
+   Esto define parte del flujo y de la explicacion al usuario.
+9. Necesita guardar estado local?
+   Si guarda, usar una clave aislada. Si se vuelve al menu, por ahora la partida
+   puede resetearse salvo que el juego documente otra cosa.
+10. Necesita Neon?
+    Si si, el manifest declara como maximo una tabla en `database`.
+11. Que datos, reglas o assets son propios de este juego?
+    Todo lo que sea especifico del juego vive dentro de `games/[gameId]`.
+
+Si estas respuestas no estan claras, conviene parar antes de escribir UI. El
+objetivo es que agregar un juego sea repetible, no una decision nueva cada vez.
+
 ## Que es un juego en este repo
 
 Un juego es una experiencia autocontenida. Puede compartir layout y componentes
@@ -205,6 +242,10 @@ Con `entryMode: "intro"`, `/games/[gameId]` muestra primero `GameEntry` y el
 boton "Empezar" lleva a `/games/[gameId]?play=1`. Ese boton queda fuera de la
 card grande de descripcion para que la lectura y la accion no compitan. Con
 `entryMode: "direct"`, la ruta monta el juego directamente.
+
+La pre-card no debe quedar vacia ni repetir solamente la card del menu. Debe
+explicar como se juega, que opciones importantes existen y que tiene que saber
+el grupo antes de empezar.
 
 ### `README.md`
 
