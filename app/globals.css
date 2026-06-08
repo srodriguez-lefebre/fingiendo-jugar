@@ -144,7 +144,7 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  padding-bottom: 2rem;
+  padding-bottom: 0.75rem;
 }
 
 .sr-only {
@@ -169,6 +169,51 @@ textarea {
   font-size: 0.9rem;
   font-weight: 800;
   white-space: nowrap;
+}
+
+.contact-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 44rem;
+  padding: 0.1rem 0 2rem;
+  color: rgba(247, 243, 255, 0.46);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.contact-footer a {
+  color: rgba(247, 243, 255, 0.62);
+  text-decoration: underline;
+  text-decoration-color: rgba(247, 243, 255, 0.22);
+  text-underline-offset: 0.18rem;
+}
+
+.contact-footer__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.contact-footer button {
+  display: inline-grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border: 1px solid rgba(247, 243, 255, 0.12);
+  border-radius: 0.35rem;
+  color: rgba(247, 243, 255, 0.58);
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+}
+
+.contact-footer button:hover,
+.contact-footer button:focus-visible {
+  color: rgba(247, 243, 255, 0.84);
+  border-color: rgba(182, 140, 255, 0.28);
+  outline: none;
 }
 
 .games-grid {

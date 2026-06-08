@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 
 import { visibleMenuGames } from "@/games/registry";
 
+import { ContactFooter } from "./contact-footer";
 import { GameCard } from "./game-card";
 
 export function GameMenu() {
@@ -21,10 +22,10 @@ export function GameMenu() {
         <div className="menu-hero__panel" aria-label="Estado de la mesa">
           <div>
             <Sparkles size={20} strokeWidth={2.2} />
-            <span>Menu listo</span>
+            <span>Menu en crecimiento</span>
           </div>
-          <strong>Primer juego listo</strong>
-          <p>Impostor ya se puede jugar desde un solo celular.</p>
+          <strong>Construyendo ideas</strong>
+          <p>Hay nuevos juegos en camino.</p>
         </div>
       </section>
 
@@ -39,6 +40,7 @@ export function GameMenu() {
         </div>
 
       </section>
+      <ContactFooter />
     </main>
   );
 }
