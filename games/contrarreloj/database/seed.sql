@@ -1,11 +1,9 @@
 insert into contrarreloj (phrase)
-select phrase
-from (
-  values
+values
     ('Mate'),
     ('Chivito'),
     ('Punta del Este'),
-    ('Luis Suárez'),
+    (U&'Luis Su\00E1rez'),
     ('Lionel Messi'),
     ('Shrek'),
     ('Hakuna Matata'),
@@ -13,18 +11,13 @@ from (
     ('WhatsApp'),
     ('Netflix'),
     ('Torre Eiffel'),
-    ('Mundial de fútbol'),
+    (U&'Mundial de f\00FAtbol'),
     ('Pizza'),
-    ('Pingüino'),
+    (U&'Ping\00FCino'),
     ('Luna de miel'),
     ('Estornudar'),
     ('Paraguas'),
     ('Shakira'),
     ('Batman'),
     ('Ta')
-) as seed(phrase)
-where not exists (
-  select 1
-  from contrarreloj
-  where contrarreloj.phrase = seed.phrase
-);
+on conflict (phrase) do nothing;

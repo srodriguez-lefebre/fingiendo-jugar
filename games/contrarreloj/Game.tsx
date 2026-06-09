@@ -442,8 +442,8 @@ export function ContrarrelojGame() {
                 {cardStatus === "ended" ? "Tiempo" : formatTime(remainingSeconds)}
               </div>
               <ol className="contrarreloj-phrases">
-                {phrases.map((phrase) => (
-                  <li key={phrase}>{phrase}</li>
+                {phrases.map((phrase, index) => (
+                  <li key={`${index}-${phrase}`}>{phrase}</li>
                 ))}
               </ol>
               <small>{cardSource === "mock" ? "Mock desarrollo" : "Base de datos"}</small>
@@ -543,6 +543,9 @@ function playTimeUpSound() {
   const oscillator = audioContext.createOscillator();
   const gain = audioContext.createGain();
 
+  oscillator.onended = () => {
+    void audioContext.close();
+  };
   oscillator.type = "sine";
   oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
   oscillator.frequency.setValueAtTime(660, audioContext.currentTime + 0.16);

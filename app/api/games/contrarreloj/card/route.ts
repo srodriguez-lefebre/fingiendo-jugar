@@ -34,7 +34,11 @@ async function loadPhrases(): Promise<LoadedCard> {
     const rows = await sql.query(
       `
         select phrase
-        from ${tableName}
+        from (
+          select distinct btrim(phrase) as phrase
+          from ${tableName}
+          where btrim(phrase) <> ''
+        ) as available_phrases
         order by random()
         limit $1
       `,

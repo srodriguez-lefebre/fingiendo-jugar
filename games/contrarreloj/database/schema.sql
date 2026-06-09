@@ -4,4 +4,4 @@ create table if not exists contrarreloj (
   created_at timestamptz not null default now()
 );
 
-create index if not exists contrarreloj_phrase_idx on contrarreloj (phrase);
+create unique index if not exists contrarreloj_phrase_unique_idx on contrarreloj (phrase);
