@@ -1376,3 +1376,530 @@ textarea {
     top: 1.5rem;
   }
 }
+
+/* Contrarreloj */
+
+.contrarreloj-shell {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 64rem);
+  min-height: 100vh;
+  align-content: start;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.contrarreloj-panel,
+.contrarreloj-board-panel,
+.contrarreloj-card-panel {
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid rgba(255, 209, 102, 0.28);
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(135deg, rgba(255, 209, 102, 0.14), transparent 34%),
+    linear-gradient(160deg, rgba(28, 21, 13, 0.98), rgba(11, 10, 18, 0.98));
+  box-shadow: 0 1.2rem 4rem rgba(0, 0, 0, 0.24);
+}
+
+.contrarreloj-board-panel {
+  position: relative;
+}
+
+.contrarreloj-board-panel::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 209, 102, 0.08), transparent),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 18px);
+  content: "";
+  pointer-events: none;
+}
+
+.contrarreloj-heading,
+.contrarreloj-section,
+.contrarreloj-team-fields {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.contrarreloj-kicker {
+  margin: 0;
+  color: #ffe3a3;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.contrarreloj-panel h1,
+.contrarreloj-board-header h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 10vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.contrarreloj-setup-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.contrarreloj-section-title,
+.contrarreloj-start-row,
+.contrarreloj-topbar,
+.contrarreloj-board-header,
+.contrarreloj-card-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.contrarreloj-section-title {
+  min-height: 2rem;
+  color: #fff3cf;
+}
+
+.contrarreloj-section-title h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.contrarreloj-section-title span {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.contrarreloj-team-field {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 0.8rem minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.contrarreloj-team-field > span,
+.contrarreloj-token,
+.contrarreloj-team-control button > span {
+  background: var(--team-color);
+}
+
+.contrarreloj-team-field > span {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
+}
+
+.contrarreloj-team-field input,
+.contrarreloj-field input,
+.contrarreloj-inline-field input {
+  min-height: 2.7rem;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.45rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0 0.75rem;
+  outline: none;
+}
+
+.contrarreloj-team-field button,
+.contrarreloj-icon-button,
+.contrarreloj-team-control div button {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 0.42rem;
+  color: rgba(247, 243, 255, 0.78);
+  background: rgba(255, 255, 255, 0.055);
+  cursor: pointer;
+}
+
+.contrarreloj-field {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.contrarreloj-field span {
+  color: rgba(247, 243, 255, 0.76);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.contrarreloj-field input[type="range"] {
+  min-height: 1.5rem;
+  padding: 0;
+  accent-color: var(--amber);
+}
+
+.contrarreloj-field strong {
+  color: #fff3cf;
+  font-size: 0.9rem;
+}
+
+.contrarreloj-primary-button,
+.contrarreloj-secondary-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.48rem;
+  border-radius: 0.45rem;
+  padding: 0 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.contrarreloj-primary-button {
+  border: 1px solid rgba(255, 227, 163, 0.55);
+  color: #111018;
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.98), rgba(255, 177, 66, 0.92));
+}
+
+.contrarreloj-secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffe3a3;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.contrarreloj-primary-button:disabled,
+.contrarreloj-secondary-button:disabled,
+.contrarreloj-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.contrarreloj-start-row {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+}
+
+.contrarreloj-start-row p,
+.contrarreloj-topbar,
+.contrarreloj-card small {
+  margin: 0;
+  color: var(--muted);
+}
+
+.contrarreloj-topbar {
+  justify-content: space-between;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.contrarreloj-board-header {
+  position: relative;
+  z-index: 1;
+  justify-content: space-between;
+}
+
+.contrarreloj-winner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2rem;
+  padding: 0 0.65rem;
+  border: 1px solid rgba(255, 209, 102, 0.36);
+  border-radius: 999px;
+  color: #111018;
+  background: var(--amber);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.contrarreloj-track {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.75rem, 1fr));
+  gap: 0.55rem;
+  max-height: 20.25rem;
+  overflow-y: auto;
+  padding: 0.45rem 0 0.2rem;
+  padding-right: 0.25rem;
+  scrollbar-gutter: stable;
+}
+
+.contrarreloj-space {
+  position: relative;
+  display: grid;
+  gap: 0.45rem;
+  min-height: 6.15rem;
+  padding: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.58rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0.5rem 1rem rgba(0, 0, 0, 0.16);
+}
+
+.contrarreloj-space.has-token {
+  border-color: rgba(255, 209, 102, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 209, 102, 0.08),
+    0 0.9rem 1.8rem rgba(255, 209, 102, 0.12);
+}
+
+.contrarreloj-space--start,
+.contrarreloj-space--finish,
+.contrarreloj-space--milestone {
+  border-color: rgba(255, 209, 102, 0.34);
+  background:
+    linear-gradient(160deg, rgba(255, 209, 102, 0.2), rgba(255, 255, 255, 0.04)),
+    rgba(255, 255, 255, 0.045);
+}
+
+.contrarreloj-space--finish {
+  background:
+    linear-gradient(135deg, rgba(255, 209, 102, 0.3), rgba(255, 111, 145, 0.12)),
+    rgba(255, 255, 255, 0.05);
+}
+
+.contrarreloj-space > span {
+  width: fit-content;
+  min-height: 1.45rem;
+  padding: 0.22rem 0.42rem;
+  border-radius: 999px;
+  color: rgba(247, 243, 255, 0.76);
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.contrarreloj-space--start > span,
+.contrarreloj-space--finish > span,
+.contrarreloj-space--milestone > span {
+  color: #111018;
+  background: var(--amber);
+}
+
+.contrarreloj-space-tokens {
+  display: flex;
+  align-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.contrarreloj-token {
+  display: grid;
+  position: relative;
+  width: 2.15rem;
+  height: 2.55rem;
+  place-items: center;
+  align-self: end;
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-radius: 999px 999px 0.7rem 0.7rem;
+  color: #111018;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.56),
+    inset 0 -0.45rem 0 rgba(0, 0, 0, 0.16),
+    0 0.5rem 0.9rem rgba(0, 0, 0, 0.34);
+}
+
+.contrarreloj-token::before {
+  position: absolute;
+  top: -0.34rem;
+  width: 1.28rem;
+  height: 0.58rem;
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  background: var(--team-color);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  content: "";
+}
+
+.contrarreloj-token::after {
+  position: absolute;
+  right: -0.18rem;
+  bottom: -0.14rem;
+  left: -0.18rem;
+  height: 0.48rem;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--team-color) 78%, #111018);
+  content: "";
+}
+
+.contrarreloj-token svg {
+  position: relative;
+  z-index: 1;
+  margin-top: -0.12rem;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.26));
+}
+
+.contrarreloj-token > span {
+  position: absolute;
+  z-index: 1;
+  right: -0.36rem;
+  bottom: -0.28rem;
+  display: grid;
+  width: 1.05rem;
+  height: 1.05rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(17, 16, 24, 0.86);
+  font-size: 0.58rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.contrarreloj-score-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.contrarreloj-team-control {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  padding: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.45rem;
+  background:
+    linear-gradient(90deg, rgba(255, 209, 102, 0.06), transparent 48%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.contrarreloj-team-control > button {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  color: rgba(247, 243, 255, 0.76);
+  background: transparent;
+  text-align: left;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.contrarreloj-team-control > button.is-active {
+  color: #fff;
+}
+
+.contrarreloj-team-control button > span {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
+.contrarreloj-team-control strong {
+  color: #fff3cf;
+  font-size: 0.88rem;
+}
+
+.contrarreloj-team-control div {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.contrarreloj-card-toolbar {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.contrarreloj-inline-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgba(247, 243, 255, 0.76);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.contrarreloj-inline-field input {
+  width: 5rem;
+  min-height: 2.45rem;
+}
+
+.contrarreloj-card {
+  display: grid;
+  width: 100%;
+  min-height: min(64vh, 31rem);
+  place-items: center;
+  gap: 1rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid rgba(255, 209, 102, 0.38);
+  border-radius: 0.75rem;
+  color: #fff;
+  background:
+    linear-gradient(150deg, rgba(255, 209, 102, 0.18), rgba(18, 13, 8, 0.98)),
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.14), transparent 26%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 227, 163, 0.08),
+    0 1.4rem 3.6rem rgba(0, 0, 0, 0.34);
+  text-align: center;
+  cursor: pointer;
+}
+
+.contrarreloj-card--revealed,
+.contrarreloj-card--ended {
+  cursor: default;
+}
+
+.contrarreloj-card > span {
+  color: #ffe3a3;
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  font-weight: 900;
+}
+
+.contrarreloj-timer {
+  color: #ffe3a3;
+  font-size: clamp(3.5rem, 18vw, 7rem);
+  font-weight: 950;
+  line-height: 0.95;
+}
+
+.contrarreloj-phrases {
+  display: grid;
+  gap: 0.6rem;
+  width: min(100%, 30rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contrarreloj-phrases li {
+  min-height: 2.6rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.45rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: clamp(1rem, 4vw, 1.35rem);
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+@media (min-width: 760px) {
+  .contrarreloj-shell {
+    padding: 2rem;
+  }
+
+  .contrarreloj-setup-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+  }
+
+  .contrarreloj-score-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
