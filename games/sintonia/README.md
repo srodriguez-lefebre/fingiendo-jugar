@@ -27,7 +27,7 @@
 
 ## Flujo y decisiones
 
-Configuración → dilema de ronda → entrega del celular → voto y pronóstico privado → siguiente entrega → revelación → nueva ronda → podio final. Se puede consultar el marcador después de cada revelación, jugar una revancha con la misma configuración o cambiar el grupo. Abandonar una partida en curso requiere una confirmación dentro del juego.
+Configuración → dilema de ronda → entrega del celular → voto y pronóstico privado → siguiente entrega → revelación → nueva ronda → podio final. Se puede consultar el marcador después de cada revelación, jugar una revancha con la misma configuración o cambiar el grupo. Abandonar una partida en curso requiere una confirmación dentro del juego. Cancelar esa confirmación conserva el voto, el pronóstico y el doble que se estaban preparando; la pantalla privada permanece montada pero oculta mientras se confirma la salida.
 
 `logic.ts` contiene las reglas puras. Las acciones incluyen ronda y turno para ignorar confirmaciones viejas o repetidas. La puntuación se aplica una sola vez, al recibir el último voto. No hay temporizadores, red, almacenamiento ni dependencias entre juegos.
 

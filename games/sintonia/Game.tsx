@@ -98,7 +98,8 @@ export function SintoniaGame() {
           <h1 id="sintonia-play-title" ref={headingRef} tabIndex={-1}>{title}</h1>
         </header>
 
-        {confirmExit ? <div className={styles.stack}><p>Se van a perder los votos y los puntos. Podés volver a configurar el grupo.</p><button className={styles.primary} type="button" onClick={() => setConfirmExit(false)}>Seguir jugando</button><button className={styles.secondary} type="button" onClick={() => { setGame(null); setConfirmExit(false); }}>Dejar partida</button></div> : <>
+        {confirmExit ? <div className={styles.stack}><p>Se van a perder los votos y los puntos. Podés volver a configurar el grupo.</p><button className={styles.primary} type="button" onClick={() => setConfirmExit(false)}>Seguir jugando</button><button className={styles.secondary} type="button" onClick={() => { setGame(null); setConfirmExit(false); }}>Dejar partida</button></div> : null}
+        <div hidden={confirmExit}>
           {game.phase === "round" ? <div className={styles.stack}><PromptCard prompt={prompt} /><p className={styles.note}>Lean en voz alta y piensen sin debatir. Después, cada persona vota y predice el total de A en privado.</p><button className={styles.primary} type="button" onClick={() => dispatch({ type: "begin", roundIndex: game.roundIndex })}>Comenzar votos<ArrowRight size={18} aria-hidden /></button></div> : null}
 
           {game.phase === "handoff" ? <div className={styles.handoff}><div className={styles.lock}><LockKeyhole size={36} aria-hidden /></div><p>Solo {player.name} mira la próxima pantalla.</p><p className={styles.note}>{game.voterIndex} de {game.players.length} votos guardados. Las respuestas se revelan al final.</p><button className={styles.primary} type="button" onClick={() => dispatch({ type: "open", ...token })}>Soy {player.name}<ArrowRight size={18} aria-hidden /></button></div> : null}
@@ -120,7 +121,7 @@ export function SintoniaGame() {
             <p className={styles.note}>{game.deck.length} dilemas, {game.players.length} miradas. ¿Se conocen un poco más?</p>
             <button className={styles.primary} type="button" onClick={start}><RotateCcw size={18} aria-hidden />Revancha con este grupo</button><button className={styles.secondary} type="button" onClick={() => setGame(null)}>Cambiar configuración</button>
           </div> : null}
-        </>}
+        </div>
       </section>
     </main>
   );

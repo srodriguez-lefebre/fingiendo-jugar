@@ -1,0 +1,1 @@
+export { historiaEnredadaManifest } from "./manifest";
