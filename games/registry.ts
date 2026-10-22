@@ -1,6 +1,7 @@
 import type { GameManifest } from "@/lib/platform/game-types";
 import { contrarrelojManifest } from "@/games/contrarreloj";
 import { impostorManifest } from "@/games/impostor";
+import { historiaEnredadaManifest } from "@/games/historia-enredada";
 import { laPutitaManifest } from "@/games/la_putita";
 import { ultimoBotinManifest } from "@/games/ultimo-botin";
 
@@ -9,6 +10,7 @@ export const games: GameManifest[] = [
   contrarrelojManifest,
   laPutitaManifest,
   ultimoBotinManifest,
+  historiaEnredadaManifest,
 ];
 
 export const playableGames = games.filter((game) => game.status === "playable");
