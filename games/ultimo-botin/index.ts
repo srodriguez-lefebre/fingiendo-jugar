@@ -1,0 +1,1 @@
+export { ultimoBotinManifest } from "./manifest";
