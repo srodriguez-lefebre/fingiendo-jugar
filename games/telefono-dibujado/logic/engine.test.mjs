@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { PROMPTS, choosePrompts } from '../data/prompts.ts';
 import {
-  MAX_POINTS, MAX_STROKES, addStroke, createGame, gameReducer,
+  MAX_POINTS, MAX_STROKES, addStroke, appendStrokePoint, finishPointerStroke, createGame, gameReducer,
   getGallery, getTurn, normalizePoint, sanitizeDrawing, sanitizeStroke,
   undoStroke, validateNames,
 } from './engine.ts';
@@ -143,4 +143,56 @@ test('original local deck supplies distinct prompts for every supported chain co
       assert.ok(selected.every((prompt) => PROMPTS.includes(prompt)));
     }
   }
+});
+
+test('streaming a long circle preserves the whole curve and endpoints under the live point cap', () => {
+  const circle = Array.from({ length: 721 }, (_, i) => [Math.round(500 + 250 * Math.cos(i * Math.PI / 360)), Math.round(350 + 250 * Math.sin(i * Math.PI / 360))]);
+  let live = { ...stroke, points: [circle[0]] };
+  for (const point of circle.slice(1)) {
+    live = appendStrokePoint(live, point);
+    assert.ok(live.points.length <= MAX_POINTS, 'active samples remain bounded at every event');
+  }
+  assert.deepEqual(live.points[0], circle[0]);
+  assert.deepEqual(live.points.at(-1), circle.at(-1));
+  const xs = live.points.map(([x]) => x);
+  const ys = live.points.map(([, y]) => y);
+  assert.ok(Math.min(...xs) <= 255, 'left arc is retained after the final append');
+  assert.ok(Math.max(...xs) >= 745, 'right arc is retained');
+  assert.ok(Math.min(...ys) <= 105 && Math.max(...ys) >= 595, 'top and bottom arcs are retained');
+  for (const [x, y] of circle) {
+    assert.ok(live.points.some(([a, b]) => Math.hypot(x - a, y - b) < 30), 'the entire original circle remains represented, not just its recent end');
+  }
+});
+
+test('capture loss from an ignored second finger cannot end the first stroke or keyboard pen', () => {
+  let active = { index: 0, pointer: 11 };
+  let drawing = { ...stroke, points: [[100, 100]] };
+  active = finishPointerStroke(active, 22);
+  assert.ok(active, 'second touch capture loss keeps the drawing finger active');
+  if (active.pointer === 11) drawing = appendStrokePoint(drawing, [150, 160]);
+  assert.deepEqual(drawing.points.at(-1), [150, 160]);
+  const saved = drawing.points;
+  active = finishPointerStroke(active, 11);
+  assert.equal(active, null);
+  assert.equal(drawing.points, saved, 'matching cancel ends capture without dropping committed points');
+  const keyboard = { index: 0, pointer: 'keyboard' };
+  assert.equal(finishPointerStroke(keyboard, 22), keyboard);
+  assert.equal(finishPointerStroke(null, 22), null);
+});
+
+test('streaming simplification preserves sharp collinear reversals and rejects bad pointer coordinates', () => {
+  const path = [
+    ...Array.from({ length: 501 }, (_, i) => [i * 2, 200]),
+    ...Array.from({ length: 451 }, (_, i) => [1000 - i * 2, 200]),
+    ...Array.from({ length: 201 }, (_, i) => [100, 200 + i * 2]),
+  ];
+  let live = { ...stroke, points: [path[0]] };
+  for (const point of path.slice(1)) live = appendStrokePoint(live, point);
+  assert.ok(live.points.length <= MAX_POINTS);
+  assert.deepEqual(live.points[0], [0, 200]);
+  assert.deepEqual(live.points.at(-1), [100, 600]);
+  assert.ok(live.points.some(([x, y]) => x === 1000 && y === 200), 'the hairpin tip must not be mistaken for a straight line');
+  assert.ok(live.points.some(([x, y]) => x === 100 && y === 200), 'the corner after the reversal remains');
+  assert.equal(appendStrokePoint(live, [NaN, 50]), live);
+  assert.equal(appendStrokePoint(live, [100, 600]), live);
 });

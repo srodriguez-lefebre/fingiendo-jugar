@@ -4,6 +4,7 @@ export const COLORS = ['#25233a', '#a33145', '#176858', '#4f47b5'] as const;
 export const WIDTHS = [8, 16, 26] as const;
 export type Point = [number, number];
 export type Stroke = { color: typeof COLORS[number]; width: typeof WIDTHS[number]; points: Point[] };
+export type ActiveStroke = { index: number; pointer: number | 'keyboard' };
 export type Mode = 'drawing' | 'text';
 export type Entry =
   | { kind: 'text'; text: string; author: number | null }
@@ -56,6 +57,37 @@ export function sanitizeStroke(stroke: Stroke): Stroke | null {
     color: COLORS.includes(stroke.color) ? stroke.color : COLORS[0],
     width: WIDTHS.includes(stroke.width) ? stroke.width : WIDTHS[0], points: compact,
   };
+}
+
+export function appendStrokePoint(stroke: Stroke, point: Point): Stroke {
+  const clean = normalizePoint(point[0], point[1], 1000, 700);
+  if (!clean) return stroke;
+  const end = stroke.points.at(-1);
+  if (end && end[0] === clean[0] && end[1] === clean[1]) return stroke;
+  const points = [...stroke.points, clean];
+  // Keep at most one extra sample while choosing the least visible bend to drop.
+  // A segment distance (rather than line distance) also preserves collinear U-turns.
+  while (points.length > MAX_POINTS) {
+    let remove = 1;
+    let smallestError = Infinity;
+    for (let i = 1; i < points.length - 1; i++) {
+      const [ax, ay] = points[i - 1];
+      const [bx, by] = points[i];
+      const [cx, cy] = points[i + 1];
+      const dx = cx - ax;
+      const dy = cy - ay;
+      const length = dx * dx + dy * dy;
+      const fraction = length ? Math.max(0, Math.min(1, ((bx - ax) * dx + (by - ay) * dy) / length)) : 0;
+      const error = (bx - ax - fraction * dx) ** 2 + (by - ay - fraction * dy) ** 2;
+      if (error < smallestError) { smallestError = error; remove = i; }
+    }
+    points.splice(remove, 1);
+  }
+  return { ...stroke, points };
+}
+
+export function finishPointerStroke(active: ActiveStroke | null, pointerId: number): ActiveStroke | null {
+  return active?.pointer === pointerId ? null : active;
 }
 
 export function sanitizeDrawing(strokes: Stroke[]): Stroke[] {

@@ -4,8 +4,8 @@ import { Keyboard, Trash2, Undo2 } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, PointerEvent } from 'react';
 
-import { COLORS, MAX_POINTS, MAX_STROKES, WIDTHS, normalizePoint, sanitizeStroke, undoStroke } from '../logic/engine';
-import type { Point, Stroke } from '../logic/engine';
+import { COLORS, MAX_POINTS, MAX_STROKES, WIDTHS, appendStrokePoint, finishPointerStroke, normalizePoint, undoStroke } from '../logic/engine';
+import type { ActiveStroke, Point, Stroke } from '../logic/engine';
 import styles from '../Game.module.css';
 
 export function DrawingPreview({ strokes, label = 'Dibujo recibido' }: { strokes: Stroke[]; label?: string }) {
@@ -27,7 +27,7 @@ export function DrawingBoard({ strokes, onChange }: { strokes: Stroke[]; onChang
   const [clearConfirm, setClearConfirm] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const drawingRef = useRef(strokes);
-  const active = useRef<{ index: number; pointer: number | 'keyboard' } | null>(null);
+  const active = useRef<ActiveStroke | null>(null);
   useLayoutEffect(() => { drawingRef.current = strokes; }, [strokes]);
 
   function update(next: Stroke[]) { drawingRef.current = next; onChange(next); }
@@ -43,10 +43,8 @@ export function DrawingBoard({ strokes, onChange }: { strokes: Stroke[]; onChang
     const { index } = active.current;
     const previous = drawingRef.current[index];
     if (!previous) return;
-    const end = previous.points.at(-1)!;
-    if (Math.hypot(end[0] - point[0], end[1] - point[1]) < 2) return;
-    const next = sanitizeStroke({ ...previous, points: [...previous.points, point] });
-    if (next) update(drawingRef.current.map((stroke, i) => i === index ? next : stroke));
+    const next = appendStrokePoint(previous, point);
+    if (next !== previous) update(drawingRef.current.map((stroke, i) => i === index ? next : stroke));
   }
   function pointerPoint(event: PointerEvent<SVGSVGElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -72,6 +70,10 @@ export function DrawingBoard({ strokes, onChange }: { strokes: Stroke[]; onChang
     if (point) extend(point);
     finish();
   }
+  function pointerEnd(event: PointerEvent<SVGSVGElement>) {
+    active.current = finishPointerStroke(active.current, event.pointerId);
+    if (!active.current) setPenDown(false);
+  }
   function keyDown(event: KeyboardEvent<SVGSVGElement>) {
     const directions: Record<string, Point> = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
     if (event.key === ' ') {
@@ -96,7 +98,7 @@ export function DrawingBoard({ strokes, onChange }: { strokes: Stroke[]; onChang
       <div className={styles.widths} role="group" aria-label="Grosor del lápiz">{WIDTHS.map((value, i) => <button key={value} type="button" aria-label={['Trazo fino', 'Trazo medio', 'Trazo grueso'][i]} aria-pressed={width === value} onClick={() => { finish(); setWidth(value); }}><span style={{ width: 5 + i * 4, height: 5 + i * 4 }} /></button>)}</div>
     </div>
     <div className={styles.sheet}>
-      <svg ref={svgRef} className={styles.canvas} viewBox="0 0 1000 700" preserveAspectRatio="none" tabIndex={0} role="application" aria-label="Hoja para dibujar" aria-describedby="telefono-keyboard-help telefono-pen-status" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={finish} onLostPointerCapture={finish} onKeyDown={keyDown} onBlur={() => { if (active.current?.pointer === 'keyboard') finish(); }}>
+      <svg ref={svgRef} className={styles.canvas} viewBox="0 0 1000 700" preserveAspectRatio="none" tabIndex={0} role="application" aria-label="Hoja para dibujar" aria-describedby="telefono-keyboard-help telefono-pen-status" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerEnd} onLostPointerCapture={pointerEnd} onKeyDown={keyDown} onBlur={() => { if (active.current?.pointer === 'keyboard') finish(); }}>
         <StrokePaths strokes={strokes} />
         {keyboardMode ? <g pointerEvents="none" aria-hidden="true"><circle cx={cursor[0]} cy={cursor[1]} r={24} fill={penDown ? '#ffc75a' : '#ffffff'} fillOpacity=".75" stroke="#25233a" strokeWidth="3" strokeDasharray={penDown ? undefined : '5 5'} /><path d={`M${cursor[0] - 35},${cursor[1]} h70 M${cursor[0]},${cursor[1] - 35} v70`} stroke="#25233a" strokeWidth="2" /></g> : null}
       </svg>
