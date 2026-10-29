@@ -7,6 +7,7 @@ import { mesaDeSospechososManifest } from "@/games/mesa-de-sospechosos";
 import { radarManifest } from "@/games/radar";
 import { sintoniaManifest } from "@/games/sintonia";
 import { ultimoBotinManifest } from "@/games/ultimo-botin";
+import { telefonoDibujadoManifest } from "@/games/telefono-dibujado";
 import { dudoManifest } from "@/games/dudo";
 
 export const games: GameManifest[] = [
@@ -19,6 +20,7 @@ export const games: GameManifest[] = [
   dudoManifest,
   mesaDeSospechososManifest,
   radarManifest,
+  telefonoDibujadoManifest,
 ];
 
 export const playableGames = games.filter((game) => game.status === "playable");
