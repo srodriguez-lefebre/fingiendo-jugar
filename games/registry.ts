@@ -3,9 +3,11 @@ import { contrarrelojManifest } from "@/games/contrarreloj";
 import { impostorManifest } from "@/games/impostor";
 import { historiaEnredadaManifest } from "@/games/historia-enredada";
 import { laPutitaManifest } from "@/games/la_putita";
+import { mesaDeSospechososManifest } from "@/games/mesa-de-sospechosos";
 import { radarManifest } from "@/games/radar";
 import { sintoniaManifest } from "@/games/sintonia";
 import { ultimoBotinManifest } from "@/games/ultimo-botin";
+import { dudoManifest } from "@/games/dudo";
 
 export const games: GameManifest[] = [
   impostorManifest,
@@ -14,6 +16,8 @@ export const games: GameManifest[] = [
   ultimoBotinManifest,
   historiaEnredadaManifest,
   sintoniaManifest,
+  dudoManifest,
+  mesaDeSospechososManifest,
   radarManifest,
 ];
 
