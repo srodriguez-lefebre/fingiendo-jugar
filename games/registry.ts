@@ -6,6 +6,7 @@ import { laPutitaManifest } from "@/games/la_putita";
 import { mesaDeSospechososManifest } from "@/games/mesa-de-sospechosos";
 import { sintoniaManifest } from "@/games/sintonia";
 import { ultimoBotinManifest } from "@/games/ultimo-botin";
+import { dudoManifest } from "@/games/dudo";
 
 export const games: GameManifest[] = [
   impostorManifest,
@@ -14,6 +15,7 @@ export const games: GameManifest[] = [
   ultimoBotinManifest,
   historiaEnredadaManifest,
   sintoniaManifest,
+  dudoManifest,
   mesaDeSospechososManifest,
 ];
 
