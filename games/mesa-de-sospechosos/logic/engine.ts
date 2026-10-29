@@ -176,7 +176,7 @@ export function advanceGame(state: GameState, action: GameAction): GameState {
     const person = available.find((entry) => state.order.indexOf(entry.id) !== state.puzzle.solution.indexOf(entry.id)) ?? available[0];
     if (!person) return state;
     const hint: Clue = { kind: "at", a: person.id, seat: state.puzzle.solution.indexOf(person.id) };
-    return { ...next, hints: [...state.hints, hint] };
+    return { ...next, hints: [...state.hints, hint], feedback: null };
   }
   if (action.type === "reveal") return { ...next, phase: "revealed" };
   if (action.type === "check") {

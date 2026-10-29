@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, CheckCheck, ChevronLeft, ChevronRight, CircleHelp, Eye, Lightbulb, RotateCcw, ScanSearch, Search, Shuffle, X } from "lucide-react";
 import { CASE_FILES } from "./data/cases";
 import { advanceGame, clueText, createGame, DIFFICULTIES, explainClue, getScore, type Difficulty, type GameAction, type GameState } from "./logic/engine";
+import { createExitGuard, type ExitGuard } from "./logic/navigation";
 import styles from "./Game.module.css";
 
 type Confirmation = "exit" | "reveal" | "hint";
@@ -19,7 +20,24 @@ export function MesaDeSospechososGame() {
   const [announcement, setAnnouncement] = useState("");
   const sectionRef = useRef<HTMLElement>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const exitGuardRef = useRef<ExitGuard | null>(null);
+  const exitViaHistoryRef = useRef(false);
   const playing = game?.phase === "playing";
+
+  useEffect(() => {
+    if (playing && !exitGuardRef.current) {
+      exitGuardRef.current = createExitGuard(window, () => {
+        exitViaHistoryRef.current = true;
+        setConfirmation("exit");
+      });
+    }
+    exitGuardRef.current?.setActive(playing);
+  }, [playing]);
+
+  useEffect(() => () => {
+    exitGuardRef.current?.dispose();
+    exitGuardRef.current = null;
+  }, []);
 
   useEffect(() => {
     if (game?.phase && game.phase !== "playing") resultHeadingRef.current?.focus();
@@ -66,7 +84,10 @@ export function MesaDeSospechososGame() {
   function confirmAction() {
     const action = confirmation;
     setConfirmation(null);
-    if (action === "exit") router.push("/");
+    if (action === "exit") {
+      if (exitViaHistoryRef.current && exitGuardRef.current) exitGuardRef.current.confirmBack();
+      else { exitGuardRef.current?.dispose(); router.push("/"); }
+    }
     if (action === "reveal") { dispatch({ type: "reveal" }); setSelected(null); }
     if (action === "hint") dispatch({ type: "hint" });
   }
@@ -77,7 +98,10 @@ export function MesaDeSospechososGame() {
 
   return (
     <main className={styles.shell}>
-      <button type="button" className={styles.back} onClick={() => playing ? setConfirmation("exit") : router.push("/")}><ArrowLeft size={18} aria-hidden="true" /> Volver al menú</button>
+      <button type="button" className={styles.back} onClick={() => {
+        exitViaHistoryRef.current = false;
+        if (playing) setConfirmation("exit"); else router.push("/");
+      }}><ArrowLeft size={18} aria-hidden="true" /> Volver al menú</button>
       <header className={styles.header}>
         <span className={styles.logo}><ScanSearch size={28} aria-hidden="true" /></span>
         <div><p className={styles.eyebrow}>Una mesa. Una sola respuesta.</p><h1>Mesa de sospechosos</h1></div>
@@ -191,7 +215,7 @@ function ConfirmDialog({ kind, onConfirm, onCancel }: { kind: Confirmation; onCo
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => { ref.current?.showModal(); }, []);
   const copy = {
-    exit: { title: "¿Cerrar el expediente?", body: "Si volvés al menú, se pierde este caso. Si seguís investigando, la mesa y tus marcas quedan como están.", action: "Salir al menú", cancel: "Seguir investigando" },
+    exit: { title: "¿Cerrar el expediente?", body: "Si salís, se pierde este caso. Si seguís investigando, la mesa y tus marcas quedan como están.", action: "Salir del caso", cancel: "Seguir investigando" },
     reveal: { title: "¿Ver la solución?", body: "El caso termina con 0 puntos. Después podrán ver el orden correcto y cómo encaja cada pista.", action: "Revelar y terminar", cancel: "Seguir pensando" },
     hint: { title: "Una ubicación por 15 puntos", body: "La ayuda revela el asiento exacto de una persona. La mesa no se mueve; ustedes deciden cómo acomodarla.", action: "Comprar ayuda · −15", cancel: "Seguir sin ayuda" },
   }[kind];

@@ -113,6 +113,18 @@ test("hints reveal distinct useful seats, cost points, and stop at two", () => {
   assert.equal(act(state, "hint"), state);
 });
 
+test("buying new evidence clears the old check feedback without changing the check or board", () => {
+  const checked = act(rules.createGame(4, "primer-caso"), "check");
+  assert.deepEqual(checked.feedback, { violations: 2 });
+  const helped = act(checked, "hint");
+  assert.equal(helped.feedback, null, "the previous count does not describe the new set of clues");
+  assert.deepEqual(helped.order, checked.order);
+  assert.deepEqual(helped.checkedOrders, checked.checkedOrders);
+  assert.equal(helped.attempts, 1);
+  assert.equal(helped.hints.length, 1);
+  assert.equal(rules.getScore(helped), 75);
+});
+
 test("a correct third check wins with earned score and rejects every late action", () => {
   let state = rules.createGame?.(8, "detectives");
   assert.ok(state);

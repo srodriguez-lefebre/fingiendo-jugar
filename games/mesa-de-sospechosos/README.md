@@ -9,9 +9,9 @@ Juego cooperativo de lógica para un grupo alrededor de un celular. Hay que reco
 - Todos debaten y una persona acomoda las fichas. No hay reloj, roles privados, turnos individuales ni empates individuales. Se toca una ficha y otra para intercambiarlas; tocar la misma cancela. También se puede seleccionar con Tab y Enter/Espacio y usar Anterior/Siguiente. Las flechas intercambian con el vecino, sin duplicar ni dejar asientos vacíos.
 - Marcar un testimonio es una anotación manual; no revela si se cumple. No hay evaluación automática mientras se mueve el tablero.
 - Se empieza con 100 puntos posibles y hasta tres comprobaciones. Cada orden equivocado cuesta 10 puntos e informa cuántas pistas y ayudas incumple, sin identificar cuáles. Repetir un orden ya comprobado no consume otro intento. Un acierto incluso en el tercer intento gana.
-- Hasta dos ayudas, confirmadas antes de comprarlas, cuestan 15 puntos cada una. Revelan una ubicación exacta que no repite otra ayuda ni una ubicación ya explícita en los testimonios. Se priorizan personas que estén mal ubicadas. No mueven la mesa ni consumen comprobaciones.
+- Hasta dos ayudas, confirmadas antes de comprarlas, cuestan 15 puntos cada una. Revelan una ubicación exacta que no repite otra ayuda ni una ubicación ya explícita en los testimonios. Se priorizan personas que estén mal ubicadas. No mueven la mesa ni consumen comprobaciones. Al cambiar la evidencia se borra el feedback de la comprobación anterior, que ya no describe todas las pistas visibles.
 - Al acertar se ganan los puntos restantes. Al tercer error o al confirmar Revelar, el caso termina con 0 puntos. Se muestran la única solución, los asientos que justifican cada pista y la última hipótesis para comparar. Todos ganan o pierden juntos.
-- Otro caso conserva dificultad y reinicia tablero, intentos, ayudas y marcas; también se puede cambiar de dificultad. Salir de un caso abierto pide confirmación. Cancelar conserva incluso la selección y las marcas. Escape y el botón de cierre también cancelan.
+- Otro caso conserva dificultad y reinicia tablero, intentos, ayudas y marcas; también se puede cambiar de dificultad. Salir de un caso abierto pide confirmación, también al usar Atrás del navegador/celular. Cancelar conserva incluso la selección y las marcas. Escape y el botón de cierre también cancelan. Una entrada protectora con la misma URL intercepta Atrás antes de desmontar el juego; conserva el estado del router, se reutiliza en revanchas y se salta al confirmar o al salir de un caso terminado.
 
 ## Datos y generación
 
@@ -32,5 +32,7 @@ No usa Neon, APIs, IA remota, almacenamiento, dependencias extra ni assets desca
 ## Verificación
 
 `node --test games/mesa-de-sospechosos/logic/engine.test.mjs` comprueba las relaciones con ejemplos literales, límite de 720 órdenes, 600 casos/semillas en tres dificultades, unicidad y ausencia de pistas redundantes, setup inválido, tablero válido, intercambios, inmutabilidad, acciones viejas/repetidas, intentos distintos, ayudas no repetidas, puntaje, victoria al tercer intento, derrota, revelado y reinicio.
+
+`node --test games/mesa-de-sospechosos/logic/navigation.test.mjs` comprueba la confirmación de Atrás, cancelación sin cambiar URL/estado del router ni acumular entradas, navegación confirmada, casos terminados, revancha y limpieza de listeners. La integración con el historial real de Next se verifica en navegador.
 
 La prueba visual debe cubrir un caso completo, la fila de seis fichas en 360px, intercambio por dos toques y por botones con teclado, anotación de pistas, compra/cancelación de ayuda, cancelación de salida preservando tablero y marcas, revelado/derrota y revancha limpia.
