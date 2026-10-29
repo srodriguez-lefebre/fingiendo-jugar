@@ -5,6 +5,7 @@ import { historiaEnredadaManifest } from "@/games/historia-enredada";
 import { laPutitaManifest } from "@/games/la_putita";
 import { sintoniaManifest } from "@/games/sintonia";
 import { ultimoBotinManifest } from "@/games/ultimo-botin";
+import { dudoManifest } from "@/games/dudo";
 
 export const games: GameManifest[] = [
   impostorManifest,
@@ -13,6 +14,7 @@ export const games: GameManifest[] = [
   ultimoBotinManifest,
   historiaEnredadaManifest,
   sintoniaManifest,
+  dudoManifest,
 ];
 
 export const playableGames = games.filter((game) => game.status === "playable");
